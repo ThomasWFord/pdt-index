@@ -111,6 +111,7 @@ const App = ({ ingredients, dirty, topFiveYield, onSaveChanges, recipes, have, f
           </LocalCard>
         </div>
       </div>
+      <p className="text-muted mt-3 text-center">Thanks to /u/ThePaternalDrunk from Reddit for the original PDT Index spreadsheet</p>
     </div>
   );
 }
