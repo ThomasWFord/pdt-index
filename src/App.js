@@ -28,7 +28,7 @@ const App = ({ ingredients, dirty, topFiveYield, onSaveChanges, recipes, have, f
     <div className="container-fluid" style={{marginTop: 10, fontSize: '80%'}}>
       <h1 className="display-4 text-center mb-2">PDT Index</h1>
       <div className="row">
-        <div className="col-2">
+        <div className="col-md-3 col-lg-3 col-xl-2">
           <LocalCard title="Ingredients">
             <FormGroup>
               <InputGroup>
