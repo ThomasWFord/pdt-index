@@ -1,13 +1,11 @@
 {
   "main.css": "static/css/main.6d7e863c.css",
   "main.css.map": "static/css/main.6d7e863c.css.map",
-  "main.js": "static/js/main.7f57a1e3.js",
-  "main.js.map": "static/js/main.7f57a1e3.js.map",
+  "main.js": "static/js/main.2ad1ccb5.js",
+  "main.js.map": "static/js/main.2ad1ccb5.js.map",
   "static\\media\\fontawesome-webfont.eot?v=4.7.0": "static/media/fontawesome-webfont.674f50d2.eot",
   "static\\media\\fontawesome-webfont.svg?v=4.7.0": "static/media/fontawesome-webfont.912ec66d.svg",
   "static\\media\\fontawesome-webfont.ttf?v=4.7.0": "static/media/fontawesome-webfont.b06871f2.ttf",
   "static\\media\\fontawesome-webfont.woff2?v=4.7.0": "static/media/fontawesome-webfont.af7ae505.woff2",
-  "static\\media\\fontawesome-webfont.woff?v=4.7.0": "static/media/fontawesome-webfont.fee66e71.woff",
-  "static\\media\\ingredients.csv": "static/media/ingredients.3b355b27.csv",
-  "static\\media\\recipes.csv": "static/media/recipes.674985bd.csv"
+  "static\\media\\fontawesome-webfont.woff?v=4.7.0": "static/media/fontawesome-webfont.fee66e71.woff"
 }
