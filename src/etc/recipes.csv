@@ -88,7 +88,7 @@ Bitters, Abbott's	Harvest Moon
 Bitters, Angostura	Benton's Old-Fashioned	
 Bitters, Angostura	Betsy Ross	
 Bitters, Angostura	Black Thorn (Irish)	
-Bitters, Angostura	Chamagne Cocktail	
+Bitters, Angostura	Champagne Cocktail	
 Bitters, Angostura	Champs Élysées	
 Bitters, Angostura	Chien Chaud	
 Bitters, Angostura	Dewey D.	
@@ -140,14 +140,14 @@ Bitters, Lemon	Tao of Pooh	Bitter Truth
 Bitters, Lemon	Vaccari	Bitter Truth
 Bitters, Old Fashion	100 Year Punch	Fee Brothers
 Bitters, Orange	Albert Mathieu	Housemade (50/50 Fee Brothers/Regan's No. 6)
-Bitters, Orange	Astoria Bianca	Housemade (50/50 Fee Brothers/Regan's No. 6)
+Bitters, Orange	Astoria Bianco	Housemade (50/50 Fee Brothers/Regan's No. 6)
 Bitters, Orange	Bijou	Housemade (50/50 Fee Brothers/Regan's No. 6)
 Bitters, Orange	Blackthorn (English)	Housemade (50/50 Fee Brothers/Regan's No. 6)
 Bitters, Orange	Caprice	Housemade (50/50 Fee Brothers/Regan's No. 6)
 Bitters, Orange	Cavalier	Housemade (50/50 Fee Brothers/Regan's No. 6)
 Bitters, Orange	Chrysanthemum	Housemade (50/50 Fee Brothers/Regan's No. 6)
 Bitters, Orange	Conquistador	Housemade (50/50 Fee Brothers/Regan's No. 6)
-Bitters, Orange	East India Company	Housemade (50/50 Fee Brothers/Regan's No. 6)
+Bitters, Orange	East India Cocktail	Housemade (50/50 Fee Brothers/Regan's No. 6)
 Bitters, Orange	Leapfrog	Housemade (50/50 Fee Brothers/Regan's No. 6)
 Bitters, Orange	Little Bit Country	Housemade (50/50 Fee Brothers/Regan's No. 6)
 Bitters, Orange	Norman Inversion	Housemade (50/50 Fee Brothers/Regan's No. 6)
@@ -430,7 +430,7 @@ Genever	Japanese Courage	Bols
 Genever	Left Coast	Anchor Genevieve
 Genever	New Amsterdam	Bols
 Genever	Red Devil	Bols
-Gin, London Dry	Astoria Bianca	Tanqueray
+Gin, London Dry	Astoria Bianco	Tanqueray
 Gin, London Dry	Aviation	Beefeater
 Gin, London Dry	Berlioni	Tanqueray
 Gin, London Dry	Bijou	Tanqueray
@@ -716,7 +716,7 @@ Juice, Pineapple	Beachbum
 Juice, Pineapple	Blackbeard	
 Juice, Pineapple	Coconut Colada	
 Juice, Pineapple	Death Bed	
-Juice, Pineapple	East India Company	
+Juice, Pineapple	East India Cocktail	
 Juice, Pineapple	El Burro	
 Juice, Pineapple	Espresso Bongo	
 Juice, Pineapple	Field Cocktail	
@@ -753,7 +753,7 @@ Lillet Blanc	Velvet Club
 Lillet Blanc	Vesper	
 Lillet Blanc	Weeski	
 Lillet Blanc	White Negroni	
-Lillet Rouge	Blackthorn Rose	
+Lillet Rouge	Blackthorn (Rose)	
 Lillet Rouge	La Louche	
 Lillet Rouge	Wrong Aisle	
 Luxardo Bitter	Bizet	
@@ -853,7 +853,7 @@ Rum	Conquistador	Matusalem Gran Reserva
 Rum	Crimson Tide	Lemon Hart Overproof
 Rum	Death Bed	Pampero Aniversario
 Rum	Daiquiri	Banks 5 Island
-Rum	East India Company	Pampero Aniversario
+Rum	East India Cocktail	Pampero Aniversario
 Rum	Espresso Bongo	Appleton Reserve
 Rum	Fish House Punch	Gosling's Black Seal
 Rum	Fog Cutter	Bacardi 8
@@ -870,7 +870,6 @@ Rum	Mum's Apple Pie	Havana Club 7 yo
 Rum	Navy Grog	Gosling's Black Seal, Appleton Reserve, El Dorado 15 yo
 Rum	Paddington	Banks 5 Island
 Rum	Plátanos en Mole Old Fashioned	Zacapa 23 Centenario
-Rum	Mo	Banks 5 Island
 Rum	Romeo y Julieta	Zacapa 23 Centenario
 Rum	Royal Bermuda Yachtclub Cocktail	Mount Gay Eclipse Amber, Flor de Caña Silver Dry
 Rum	Silver Root Beer Fizz	Mount Gay Eclipse White, Smith & Cross Jamaican
@@ -984,7 +983,7 @@ Syrup, Maple	Master Cleanse
 Syrup, Maple	Nouveau Sangaree	
 Syrup, Maple	Pumpkin Toddy	
 Syrup, Rice	100 Year Punch	Ssal-Yut
-Syrup, Rose	Blackthorn Rose	
+Syrup, Rose	Blackthorn (Rose)	
 Syrup, Tonic	Gin & Tonic	
 Syrup, Vanilla	Sage Old Buck	
 Tea, Chamomile	Le Père Bis	
