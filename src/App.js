@@ -79,10 +79,10 @@ const App = ({ ingredients, dirty, topFiveYield, onSaveChanges, recipes, have, f
               <tbody>
               {recipes.map(i => (
                 <tr key={i.name}>
-                  <td style={{whiteSpace: 'noWrap'}}>{i.name}</td>
+                  <td>{i.name}</td>
                   <td>{i.numMissing}</td>
-                  <td>{i.missing.join(', ')}</td>
-                  <td>{i.have.join(', ')}</td>
+                  <td>{i.missing.join('; ')}</td>
+                  <td>{i.have.join('; ')}</td>
                 </tr>
               ))}
               </tbody>
@@ -101,9 +101,9 @@ const App = ({ ingredients, dirty, topFiveYield, onSaveChanges, recipes, have, f
               <tbody>
               {buyList.map(i => (
                 <tr key={i.ingredient}>
-                  <td style={{whiteSpace: 'noWrap'}}>{i.ingredient}</td>
+                  <td>{i.ingredient}</td>
                   <td>{i.num}</td>
-                  <td>{i.cocktails.join(', ')}</td>
+                  <td>{i.cocktails.join('; ')}</td>
                 </tr>
               ))}
               </tbody>
