@@ -4,49 +4,21 @@ import { compose, withStateHandlers, withPropsOnChange, withHandlers } from 'rec
 import { chain, sortBy, each, filter, includes } from 'lodash';
 import CocktailRow from './CocktailRow';
 import Card from './Card';
+import IngredientsList from './IngredientsList';
 
 const CocktailIndex = ({ ingredients, name, dirty, topFiveYield, onSaveChanges, recipes, have, filterIngredients, onSelectAllChange, setFilterIngredients, buyList, setSelected, search, setSearch, selected, ...props }) => {
+  const ingredientsHeader = <div>Ingredients <span className="fa fa-chevron-up pull-right text-muted" /></div>;
+
   return (
     <div className="row">
       <div className="col-md-3 col-lg-3 col-xl-2">
-        <Card title="Ingredients">
-          <FormGroup>
-            <InputGroup>
-              <Input type="text" size="sm" placeholder="Search..." onChange={e => setSearch(e.target.value)} value={search} />
-              <InputGroupAddon>
-                <span className="fa fa-search" />
-              </InputGroupAddon>
-            </InputGroup>
-          </FormGroup>
-          <FormGroup>
-            <ButtonGroup>
-              <Button active={filterIngredients === null} onClick={() => setFilterIngredients(null)}>*</Button>{' '}
-              <Button active={filterIngredients === true} onClick={() => setFilterIngredients(true)}>
-                <input type="checkbox" readOnly checked /></Button>{' '}
-              <Button active={filterIngredients === false} onClick={() => setFilterIngredients(false)}>
-                <input type="checkbox" readOnly onClick={e => e.preventDefault()} />
-              </Button>
-            </ButtonGroup>
-          </FormGroup>
-          {dirty && <FormGroup>
-            <Button size="sm" onClick={onSaveChanges} className="btn-block"><i className="fa fa-save" /> Save changes</Button>
-          </FormGroup>}
-          <FormGroup check>
-            <Label check>
-              <Input type="checkbox" onChange={e => onSelectAllChange(!!e.target.checked)} />
-            </Label>
-          </FormGroup>
-          {ingredients.map((i, idx) => (
-            <FormGroup key={idx} check>
-              <Label check>
-                <Input type="checkbox" onChange={e => setSelected(i.name, e.target.checked)} checked={!!selected[i.name]} /> {i.name}
-              </Label>
-            </FormGroup>
-          ))}
+        <Card header="Ingredients" toggleKey="ingredients_toggle">
+          <IngredientsList {...{ setSearch, search, filterIngredients, setFilterIngredients, onSaveChanges,
+            dirty, onSelectAllChange, ingredients, setSelected, selected }} />
         </Card>
       </div>
       <div className="col mt-2 mt-sm-0">
-        <Card title={`${name} Cocktails`} subtitle={`You can make ${have} out of ${recipes.length} cocktails`}>
+        <Card toggleKey="cocktails_toggle" header={`${name} Cocktails`} subtitle={`You can make ${have} out of ${recipes.length} cocktails`}>
           <Table size="sm" striped>
             <thead>
             <tr>
@@ -64,7 +36,7 @@ const CocktailIndex = ({ ingredients, name, dirty, topFiveYield, onSaveChanges, 
         </Card>
       </div>
       <div className="col mt-2 mt-sm-0">
-        <Card title="Buy List" subtitle={`Purchase the top 5 for an additional ${topFiveYield} cocktails`}>
+        <Card toggleKey="buylist_toggle" header="Buy List" subtitle={`Purchase the top 5 for an additional ${topFiveYield} cocktails`}>
           <Table size="sm" striped>
             <thead>
             <tr>

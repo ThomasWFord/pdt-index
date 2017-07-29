@@ -3,7 +3,6 @@ import { PopoverContent, Popover, PopoverTitle, Button } from 'reactstrap';
 import { withStateHandlers, withHandlers, compose } from 'recompose';
 
 export const CocktailRow = ({ item, toggle, isOpen, ...props }) => {
-  console.log(isOpen);
   return (
     <tr>
       <td>
