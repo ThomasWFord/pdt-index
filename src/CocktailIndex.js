@@ -1,27 +1,15 @@
 import React from 'react';
-import { FormGroup, Label, Input, Card, CardBlock, CardTitle, CardText, ButtonGroup, Button, InputGroup, InputGroupAddon,
-  CardSubtitle, Table, Popover, PopoverTitle, PopoverContent } from 'reactstrap'
+import { FormGroup, Label, Input, ButtonGroup, Button, InputGroup, InputGroupAddon, Table } from 'reactstrap'
 import { compose, withStateHandlers, withPropsOnChange, withHandlers } from 'recompose';
 import { chain, sortBy, each, filter, includes } from 'lodash';
-
-
-const LocalCard = ({ title, subtitle, children, ...props }) => {
-  return (
-    <Card {...props}>
-      <CardBlock>
-        <CardTitle>{title}</CardTitle>
-        {subtitle && <CardSubtitle className="text-muted mb-3">{subtitle}</CardSubtitle>}
-        <CardText tag="div">{children}</CardText>
-      </CardBlock>
-    </Card>
-  );
-}
+import CocktailRow from './CocktailRow';
+import Card from './Card';
 
 const CocktailIndex = ({ ingredients, name, dirty, topFiveYield, onSaveChanges, recipes, have, filterIngredients, onSelectAllChange, setFilterIngredients, buyList, setSelected, search, setSearch, selected, ...props }) => {
   return (
     <div className="row">
       <div className="col-md-3 col-lg-3 col-xl-2">
-        <LocalCard title="Ingredients">
+        <Card title="Ingredients">
           <FormGroup>
             <InputGroup>
               <Input type="text" size="sm" placeholder="Search..." onChange={e => setSearch(e.target.value)} value={search} />
@@ -55,34 +43,28 @@ const CocktailIndex = ({ ingredients, name, dirty, topFiveYield, onSaveChanges, 
               </Label>
             </FormGroup>
           ))}
-        </LocalCard>
+        </Card>
       </div>
       <div className="col mt-2 mt-sm-0">
-        <LocalCard title={`${name} Cocktails`} subtitle={`You can make ${have} out of ${recipes.length} cocktails`}>
+        <Card title={`${name} Cocktails`} subtitle={`You can make ${have} out of ${recipes.length} cocktails`}>
           <Table size="sm" striped>
             <thead>
             <tr>
               <th>Name</th>
               <th colSpan="2">Missing</th>
-              <th>You have</th>
-
             </tr>
             </thead>
             <tbody>
             {recipes.map(i => (
-              <tr key={i.name}>
-                <td>{i.name}</td>
-                <td>{i.numMissing}</td>
-                <td>{i.missing.join('; ')}</td>
-                <td>{i.have.join('; ')}</td>
-              </tr>
+              <CocktailRow key={i.name} item={i} />
             ))}
             </tbody>
+
           </Table>
-        </LocalCard>
+        </Card>
       </div>
       <div className="col mt-2 mt-sm-0">
-        <LocalCard title="Buy List" subtitle={`Purchase the top 5 for an additional ${topFiveYield} cocktails`}>
+        <Card title="Buy List" subtitle={`Purchase the top 5 for an additional ${topFiveYield} cocktails`}>
           <Table size="sm" striped>
             <thead>
             <tr>
@@ -100,7 +82,7 @@ const CocktailIndex = ({ ingredients, name, dirty, topFiveYield, onSaveChanges, 
             ))}
             </tbody>
           </Table>
-        </LocalCard>
+        </Card>
       </div>
     </div>
   );
@@ -125,25 +107,26 @@ const enhance = compose(
     }
   }),
   withPropsOnChange(['selected'], ({ selected, recipes }) => {
+    let nameIndex = 0;
     const list = chain(recipes)
+      .sortBy('ingredient')
       .groupBy('name')
       .map((b, name) => {
         const missing = [];
-        const have = [];
 
         each(b, ({ ingredient }) => {
           if (!selected[ingredient]) {
             missing.push(ingredient);
-          } else {
-            have.push(ingredient);
           }
         });
 
         return {
           name: name,
+          index: nameIndex++,
+          page: b[0].page,
           numMissing: missing.length,
-          missing: sortBy(missing),
-          have: sortBy(have),
+          missing,
+          raw: b,
         };
       })
       .orderBy(['numMissing', 'name'])
