@@ -1,14 +1,12 @@
 import React from 'react';
-import { FormGroup, Label, Input, ButtonGroup, Button, InputGroup, InputGroupAddon, Table, Col, Row } from 'reactstrap'
+import { Table, Col, Row } from 'reactstrap'
 import { compose, withStateHandlers, withPropsOnChange, withHandlers } from 'recompose';
-import { chain, sortBy, each, filter, includes } from 'lodash';
+import { chain, each, filter, includes } from 'lodash';
 import CocktailRow from './CocktailRow';
 import Card from './Card';
 import IngredientsList from './IngredientsList';
 
 const CocktailIndex = ({ ingredients, name, dirty, topFiveYield, onSaveChanges, recipes, have, filterIngredients, onSelectAllChange, setFilterIngredients, buyList, setSelected, search, setSearch, selected, ...props }) => {
-  const ingredientsHeader = <div>Ingredients <span className="fa fa-chevron-up pull-right text-muted" /></div>;
-
   return (
     <Row>
       <Col xs="12" sm="4" md="3">

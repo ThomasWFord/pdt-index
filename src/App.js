@@ -1,11 +1,13 @@
 import React from 'react';
+// eslint-disable-next-line
 import bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
+// eslint-disable-next-line
 import fontAwesomeStyles from 'font-awesome/css/font-awesome.min.css';
 import deathAndCoRecipes from './etc/death_and_co_recipes.csv';
 import { Navbar, NavbarToggler, Nav, NavItem, Collapse, NavLink, NavbarBrand } from 'reactstrap';
 import pdtRecipes from './etc/pdt_recipes.csv';
 import { chain, map } from 'lodash';
-import { HashRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import CocktailIndex from './CocktailIndex'
 import { compose, withStateHandlers } from 'recompose';
 
