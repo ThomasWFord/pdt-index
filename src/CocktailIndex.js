@@ -9,15 +9,15 @@ import IngredientsList from './IngredientsList';
 const CocktailIndex = ({ ingredients, name, dirty, topFiveYield, onSaveChanges, recipes, have, filterIngredients, onSelectAllChange, setFilterIngredients, buyList, setSelected, search, setSearch, selected, ...props }) => {
   return (
     <Row>
-      <Col xs="12" sm="4" md="3">
+      <Col xs={false} sm="4" md="3">
         <Card header="Ingredients" toggleKey="ingredients_toggle">
           <IngredientsList {...{ setSearch, search, filterIngredients, setFilterIngredients, onSaveChanges,
             dirty, onSelectAllChange, ingredients, setSelected, selected }} />
         </Card>
       </Col>
-      <Col xs="12" sm="8" md="9">
+      <Col xs={false} sm="8" md="9">
         <Row>
-          <Col xs="12" lg="6" className="mt-2 mt-sm-0">
+          <Col xs={false} lg={true} className="mt-2 mt-sm-0">
             <Card toggleKey="cocktails_toggle" header={`${name} Cocktails`} subtitle={`You can make ${have} out of ${recipes.length} cocktails`}>
               <Table size="sm" striped>
                 <thead>
@@ -35,7 +35,7 @@ const CocktailIndex = ({ ingredients, name, dirty, topFiveYield, onSaveChanges, 
               </Table>
             </Card>
           </Col>
-          <Col xs="12" lg="6" className="mt-2 mt-lg-0">
+          <Col xs={false} lg={true} className="mt-2 mt-lg-0">
             <Card toggleKey="buylist_toggle" header="Buy List" subtitle={`Purchase the top 5 for an additional ${topFiveYield} cocktails`}>
               <Table size="sm" striped>
                 <thead>
