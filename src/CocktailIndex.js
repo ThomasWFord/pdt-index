@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormGroup, Label, Input, ButtonGroup, Button, InputGroup, InputGroupAddon, Table } from 'reactstrap'
+import { FormGroup, Label, Input, ButtonGroup, Button, InputGroup, InputGroupAddon, Table, Col, Row } from 'reactstrap'
 import { compose, withStateHandlers, withPropsOnChange, withHandlers } from 'recompose';
 import { chain, sortBy, each, filter, includes } from 'lodash';
 import CocktailRow from './CocktailRow';
@@ -10,53 +10,57 @@ const CocktailIndex = ({ ingredients, name, dirty, topFiveYield, onSaveChanges, 
   const ingredientsHeader = <div>Ingredients <span className="fa fa-chevron-up pull-right text-muted" /></div>;
 
   return (
-    <div className="row">
-      <div className="col-md-3 col-lg-3 col-xl-2">
+    <Row>
+      <Col xs="12" sm="4" md="3">
         <Card header="Ingredients" toggleKey="ingredients_toggle">
           <IngredientsList {...{ setSearch, search, filterIngredients, setFilterIngredients, onSaveChanges,
             dirty, onSelectAllChange, ingredients, setSelected, selected }} />
         </Card>
-      </div>
-      <div className="col mt-2 mt-sm-0">
-        <Card toggleKey="cocktails_toggle" header={`${name} Cocktails`} subtitle={`You can make ${have} out of ${recipes.length} cocktails`}>
-          <Table size="sm" striped>
-            <thead>
-            <tr>
-              <th>Name</th>
-              <th colSpan="2">Missing</th>
-            </tr>
-            </thead>
-            <tbody>
-            {recipes.map(i => (
-              <CocktailRow key={i.name} item={i} />
-            ))}
-            </tbody>
+      </Col>
+      <Col xs="12" sm="8" md="9">
+        <Row>
+          <Col xs="12" lg="6" className="mt-2 mt-sm-0">
+            <Card toggleKey="cocktails_toggle" header={`${name} Cocktails`} subtitle={`You can make ${have} out of ${recipes.length} cocktails`}>
+              <Table size="sm" striped>
+                <thead>
+                <tr>
+                  <th>Name</th>
+                  <th colSpan="2">Missing</th>
+                </tr>
+                </thead>
+                <tbody>
+                {recipes.map(i => (
+                  <CocktailRow key={i.name} item={i} />
+                ))}
+                </tbody>
 
-          </Table>
-        </Card>
-      </div>
-      <div className="col mt-2 mt-sm-0">
-        <Card toggleKey="buylist_toggle" header="Buy List" subtitle={`Purchase the top 5 for an additional ${topFiveYield} cocktails`}>
-          <Table size="sm" striped>
-            <thead>
-            <tr>
-              <th>Ingredient</th>
-              <th colSpan="2">Cocktails</th>
-            </tr>
-            </thead>
-            <tbody>
-            {buyList.map(i => (
-              <tr key={i.ingredient}>
-                <td>{i.ingredient}</td>
-                <td>{i.num}</td>
-                <td>{i.cocktails.join('; ')}</td>
-              </tr>
-            ))}
-            </tbody>
-          </Table>
-        </Card>
-      </div>
-    </div>
+              </Table>
+            </Card>
+          </Col>
+          <Col xs="12" lg="6" className="mt-2 mt-lg-0">
+            <Card toggleKey="buylist_toggle" header="Buy List" subtitle={`Purchase the top 5 for an additional ${topFiveYield} cocktails`}>
+              <Table size="sm" striped>
+                <thead>
+                <tr>
+                  <th>Ingredient</th>
+                  <th colSpan="2">Cocktails</th>
+                </tr>
+                </thead>
+                <tbody>
+                {buyList.map(i => (
+                  <tr key={i.ingredient}>
+                    <td>{i.ingredient}</td>
+                    <td>{i.num}</td>
+                    <td>{i.cocktails.join('; ')}</td>
+                  </tr>
+                ))}
+                </tbody>
+              </Table>
+            </Card>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
   );
 }
 
