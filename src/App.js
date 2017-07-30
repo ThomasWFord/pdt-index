@@ -4,6 +4,8 @@ import bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
 // eslint-disable-next-line
 import fontAwesomeStyles from 'font-awesome/css/font-awesome.min.css';
 import deathAndCoRecipes from './etc/death_and_co_recipes.csv';
+import smugglersCoveRecipes from './etc/smugglers_cove_recipes.csv';
+import vsAndFcRecipes from './etc/vs_and_fc_recipes.csv';
 import { Navbar, NavbarToggler, Nav, NavItem, Collapse, NavLink, NavbarBrand } from 'reactstrap';
 import pdtRecipes from './etc/pdt_recipes.csv';
 import { chain, map } from 'lodash';
@@ -14,11 +16,20 @@ import { compose, withStateHandlers } from 'recompose';
 const indexes = map([{
   name: 'PDT',
   link: '/pdt',
-  recipes: pdtRecipes
+  recipes: pdtRecipes,
 }, {
   name: 'Death & Co',
   link: '/death_and_co',
-  recipes: deathAndCoRecipes
+  recipes: deathAndCoRecipes,
+}, {
+  name: 'Smuggler\'s Cove',
+  link: '/smugglers_cove',
+  recipes: smugglersCoveRecipes,
+}, {
+  name: 'Vintage Spirits and Forgotten',
+  linkName: 'VS & FC',
+  link: '/vs_and_fc',
+  recipes: vsAndFcRecipes,
 }], i => ({...i, ingredients: chain(i.recipes).map('ingredient').uniq().sortBy().map(name => ({ name })).value() }));
 
 
@@ -26,7 +37,7 @@ const App = ({ toggle, isOpen, ...props }) => {
   const links = map(indexes, (i, idx) => (
     <Route path={i.link} key={i.name} children={({match}) => (
       <NavItem>
-        <NavLink active={!!match} href={`#${i.link}`}>{i.name}</NavLink>
+        <NavLink active={!!match} href={`#${i.link}`}>{i.linkName || i.name}</NavLink>
       </NavItem>
     )} />
   ));
@@ -52,7 +63,7 @@ const App = ({ toggle, isOpen, ...props }) => {
             ))}
             <Route render={() => <Redirect to="/pdt" />}></Route>
           </Switch>
-          <p className="text-muted mt-3 text-center">Thanks to /u/ThePaternalDrunk and /u/el_joker1 for the original index spreadsheets</p>
+          <p className="text-muted mt-3 text-center">Thanks to ThePaternalDrunk, el_joker1 & rebeldragonlol for the index spreadsheets</p>
         </div>
       </div>
     </Router>
