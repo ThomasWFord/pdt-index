@@ -17,7 +17,7 @@ const CocktailIndex = ({ ingredients, name, dirty, topFiveYield, onSaveChanges, 
       </Col>
       <Col xs={false} sm="8" md="9">
         <Row>
-          <Col xs={false} lg={true} className="mt-2 mt-sm-0">
+          <Col xs={false} xl={true} className="mt-2 mt-sm-0">
             <Card toggleKey="cocktails_toggle" header={`${name} Cocktails`} subtitle={`You can make ${have} out of ${recipes.length} cocktails`}>
               <Table size="sm" striped>
                 <thead>
@@ -35,7 +35,7 @@ const CocktailIndex = ({ ingredients, name, dirty, topFiveYield, onSaveChanges, 
               </Table>
             </Card>
           </Col>
-          <Col xs={false} lg={true} className="mt-2 mt-lg-0">
+          <Col xs={false} xl={true} className="mt-2 mt-xl-0">
             <Card toggleKey="buylist_toggle" header="Buy List" subtitle={`Purchase the top 5 for an additional ${topFiveYield} cocktails`}>
               <Table size="sm" striped>
                 <thead>
