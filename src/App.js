@@ -32,6 +32,7 @@ const indexes = map([{
   recipes: vsAndFcRecipes,
 }], i => ({...i, ingredients: chain(i.recipes).map('ingredient').uniq().sortBy().map(name => ({ name })).value() }));
 
+const containerStyle = {marginTop: 10, fontSize: '80%'};
 
 const App = ({ toggle, isOpen, ...props }) => {
   const links = map(indexes, (i, idx) => (
@@ -54,7 +55,7 @@ const App = ({ toggle, isOpen, ...props }) => {
             </Nav>
           </Collapse>
         </Navbar>
-        <div className="container-fluid" style={{marginTop: 10, fontSize: '80%'}}>
+        <div className="container-fluid " style={containerStyle}>
           <Switch>
             {indexes.map(i => (
                 <Route key={i.name} path={i.link} render={props => (

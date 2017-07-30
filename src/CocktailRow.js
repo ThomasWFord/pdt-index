@@ -1,6 +1,10 @@
 import React from 'react';
-import { PopoverContent, Popover, PopoverTitle, Button } from 'reactstrap';
-import { withStateHandlers, compose } from 'recompose';
+import { PopoverContent, Popover, PopoverTitle, Button as ReactstrapButton } from 'reactstrap';
+import { withStateHandlers, compose, pure } from 'recompose';
+
+const popoverButtonStyle = {whiteSpace: 'normal', textAlign: 'left'};
+
+const Button = pure(ReactstrapButton);
 
 export const CocktailRow = ({ item, toggle, isOpen, ...props }) => {
   return (
@@ -12,7 +16,7 @@ export const CocktailRow = ({ item, toggle, isOpen, ...props }) => {
             <PopoverContent className="small">
               <ul className="list-unstyled">
               {item.raw.map(i => (
-                <li>
+                <li key={i.ingredient}>
                   {i.ingredient}<span className="text-info">{i.notes ? ` ${i.notes}` : ''}
                   {!!i.category && ` (${i.category})`}</span>
                 </li>
@@ -20,7 +24,8 @@ export const CocktailRow = ({ item, toggle, isOpen, ...props }) => {
               </ul>
             </PopoverContent>
           </Popover>}
-          <Button size="sm" color="link" style={{whiteSpace: 'normal', textAlign: 'left'}} onClick={toggle} id={`cocktail_${item.index}`}>{item.name}</Button>
+          <Button size="sm" color="link" style={popoverButtonStyle} onClick={toggle} id={`cocktail_${item.index}`}>{item.name}</Button>
+
         </div>
       </td>
       <td>{item.numMissing}</td>
