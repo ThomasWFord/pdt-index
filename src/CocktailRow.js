@@ -1,5 +1,5 @@
 import React from 'react';
-import { PopoverContent, Popover, PopoverTitle, Button, ListGroup, ListGroupItem, ListGroupItemText } from 'reactstrap';
+import { PopoverContent, Popover, PopoverTitle, Button } from 'reactstrap';
 import { withStateHandlers, compose } from 'recompose';
 
 export const CocktailRow = ({ item, toggle, isOpen, ...props }) => {
