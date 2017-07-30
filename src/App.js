@@ -12,6 +12,12 @@ import { chain, map } from 'lodash';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import CocktailIndex from './CocktailIndex'
 import { compose, withStateHandlers } from 'recompose';
+import ReactGA from 'react-ga';
+import createHistory from 'history/createBrowserHistory'
+
+ReactGA.initialize('UA-103648191-1');
+
+const history = createHistory();
 
 const indexes = map([{
   name: 'PDT',
@@ -34,6 +40,17 @@ const indexes = map([{
 
 const containerStyle = {marginTop: 10, fontSize: '80%'};
 
+const logPageView = (location) => {
+  const { pathname, hash } = location;
+  const page = `${pathname}${hash}`;
+  ReactGA.set({ page });
+  ReactGA.pageview(page);
+}
+
+history.listen(logPageView);
+logPageView(window.location)
+
+
 const App = ({ toggle, isOpen, ...props }) => {
   const links = map(indexes, (i, idx) => (
     <Route path={i.link} key={i.name} children={({match}) => (
@@ -44,7 +61,7 @@ const App = ({ toggle, isOpen, ...props }) => {
   ));
 
   return (
-    <Router>
+    <Router history={history}>
       <div>
         <Navbar color="faded" light toggleable>
           <NavbarToggler right onClick={toggle} />
