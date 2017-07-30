@@ -1,5 +1,5 @@
 import React from 'react';
-import { PopoverContent, Popover, PopoverTitle, Button } from 'reactstrap';
+import { PopoverContent, Popover, PopoverTitle, Button, ListGroup, ListGroupItem, ListGroupItemText } from 'reactstrap';
 import { withStateHandlers, compose } from 'recompose';
 
 export const CocktailRow = ({ item, toggle, isOpen, ...props }) => {
@@ -7,13 +7,20 @@ export const CocktailRow = ({ item, toggle, isOpen, ...props }) => {
     <tr>
       <td>
         <div>
-          <Popover placement="right" isOpen={isOpen} toggle={toggle} target={`cocktail_${item.index}`}>
-            <PopoverTitle>{item.name}{!!item.page && ` (page ${item.page})`}</PopoverTitle>
+          {isOpen && <Popover placement="right" isOpen={isOpen} toggle={toggle} target={`cocktail_${item.index}`}>
+            <PopoverTitle>{item.name}{!!item.page && ` (p${item.page})`}</PopoverTitle>
             <PopoverContent className="small">
-              {item.raw.map(i => <div key={i.ingredient}>{i.ingredient}{i.notes ? ` - ${i.notes}` : ''}</div>)}
+              <ul className="list-unstyled">
+              {item.raw.map(i => (
+                <li>
+                  {i.ingredient}<span className="text-info">{i.notes ? ` ${i.notes}` : ''}
+                  {!!i.category && ` (${i.category})`}</span>
+                </li>
+              ))}
+              </ul>
             </PopoverContent>
-          </Popover>
-          <Button size="sm" color="link" onClick={toggle} id={`cocktail_${item.index}`}>{item.name}</Button>
+          </Popover>}
+          <Button size="sm" color="link" style={{whiteSpace: 'normal', textAlign: 'left'}} onClick={toggle} id={`cocktail_${item.index}`}>{item.name}</Button>
         </div>
       </td>
       <td>{item.numMissing}</td>
