@@ -7,5 +7,4 @@
 
 ### TODO
 
-- Combine / clean all ingredients to make one master list
-- Allow all indexes to be viewed at the same time
+- Clean all ingredients to make one master list

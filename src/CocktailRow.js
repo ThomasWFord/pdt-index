@@ -12,7 +12,7 @@ export const CocktailRow = ({ item, toggle, isOpen, ...props }) => {
       <td>
         <div>
           {isOpen && <Popover placement="right" isOpen={isOpen} toggle={toggle} target={`cocktail_${item.index}`}>
-            <PopoverTitle>{item.name}{!!item.page && ` (p${item.page})`}</PopoverTitle>
+            <PopoverTitle>{item.name}{!!item.page && ` (${item.book ? `${item.book} ` : ''}p${item.page})`}</PopoverTitle>
             <PopoverContent className="small">
               <ul className="list-unstyled">
               {item.raw.map(i => (

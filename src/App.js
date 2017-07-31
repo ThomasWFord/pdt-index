@@ -19,7 +19,22 @@ ReactGA.initialize('UA-103648191-1');
 
 const history = createHistory();
 
+//Add the name of the book so that the tooltips are more useful on the 'all' screen
+const addBookName = (arr, name) => {
+  return arr.map(value => (Object.assign(value, {book:name})));
+}
+const allRecipes = [
+  ...addBookName(pdtRecipes, 'PDT'),
+  ...addBookName(deathAndCoRecipes, 'Death & Co'),
+  ...addBookName(smugglersCoveRecipes, 'Smuggler\'s Cove'),
+  ...addBookName(vsAndFcRecipes, 'Vintage Spirits and Forgotten')
+];
+
 const indexes = map([{
+  name: 'All',
+  link: '/all',
+  recipes: allRecipes
+}, {
   name: 'PDT',
   link: '/pdt',
   recipes: pdtRecipes,
@@ -79,7 +94,7 @@ const App = ({ toggle, isOpen, ...props }) => {
                   <CocktailIndex name={i.name} recipes={i.recipes} ingredients={i.ingredients} saveKey={`selected`} />
                 )} />
             ))}
-            <Route render={() => <Redirect to="/pdt" />}></Route>
+            <Route render={() => <Redirect to="/all" />}></Route>
           </Switch>
           <p className="text-muted mt-3 text-center">Thanks to ThePaternalDrunk, el_joker1 & rebeldragonlol for the index spreadsheets</p>
         </div>
