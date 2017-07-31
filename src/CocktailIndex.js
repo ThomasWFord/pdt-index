@@ -80,8 +80,9 @@ const enhance = compose(
       return { dirty: false };
     }
   }),
-  withPropsOnChange(['selected'], ({ selected, recipes }) => {
+  withPropsOnChange(['selected'], ({ selected, recipes, name }) => {
     let nameIndex = 0;
+    let sectionName = name;
     const list = chain(recipes)
       .sortBy('ingredient')
       .groupBy('name')
@@ -98,6 +99,7 @@ const enhance = compose(
           name: name,
           index: nameIndex++,
           page: b[0].page,
+          book: sectionName === 'All' ? b[0].book : null,
           numMissing: missing.length,
           missing,
           raw: b,
