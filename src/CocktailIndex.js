@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Col, Row } from 'reactstrap'
+import { Table, Col, Row, InputGroup, FormGroup, Input, InputGroupAddon } from 'reactstrap'
 import { compose, withStateHandlers, withPropsOnChange, withHandlers } from 'recompose';
 import { chain, each, filter, includes } from 'lodash';
 import CocktailRow from './CocktailRow';
@@ -7,11 +7,12 @@ import Card from './Card';
 import IngredientsList from './IngredientsList';
 
 const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterIngredients,
-                         onSelectAllChange, setFilterIngredients, buyList, setSelected, search, setSearch, selected, onAddIngredient, onRemoveIngredient, ...props }) => {
+                         onSelectAllChange, setFilterIngredients, buyList, setSelected, search, setSearch, selected,
+                         onAddIngredient, onRemoveIngredient, setCocktailSearch, cocktailSearch, ...props }) => {
   return (
     <Row>
       <Col xs={false} sm="4" md="3">
-        <Card header="Ingredients" toggleKey="ingredients_toggle">
+        <Card header="Ingredients" subtitle="Select your available ingredients" toggleKey="ingredients_toggle">
           <IngredientsList {...{ setSearch, search, filterIngredients, setFilterIngredients,
             onSelectAllChange, ingredients, setSelected, selected }} />
         </Card>
@@ -20,6 +21,14 @@ const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterI
         <Row>
           <Col xs={false} xl={true} className="mt-2 mt-sm-0">
             <Card toggleKey="cocktails_toggle" header={`${name} Cocktails`} subtitle={`You can make ${have} out of ${recipes.length} cocktails`}>
+              <FormGroup>
+                <InputGroup>
+                  <Input type="text" size="sm" placeholder="Search..." onChange={setCocktailSearch} value={cocktailSearch} />
+                  <InputGroupAddon>
+                    <span className="fa fa-search" />
+                  </InputGroupAddon>
+                </InputGroup>
+              </FormGroup>
               <Table size="sm" striped>
                 <thead>
                 <tr>
@@ -67,6 +76,7 @@ const enhance = compose(
   withStateHandlers(({ saveKey }) => ({
     selected: JSON.parse(localStorage.getItem(saveKey) || '{}'),
     search: '',
+    cocktailSearch: '',
     filterIngredients: null
   }), {
     setSelected: ({ selected }) => (ingredient, value) => ({
@@ -75,6 +85,7 @@ const enhance = compose(
     }),
     setBulkSelected: () => (selected) => ({ selected, dirty: true }),
     setSearch: () => (search) => ({ search }),
+    setCocktailSearch: () => (cocktailSearch) => ({ cocktailSearch }),
     setFilterIngredients: () => (filterIngredients) => ({ filterIngredients }),
   }),
   withPropsOnChange(['selected'], ({ selected, recipes, saveKey }) => {
@@ -132,6 +143,18 @@ const enhance = compose(
       ingredients: copy,
     }
   }),
+  withPropsOnChange(['cocktailSearch'], ({ cocktailSearch, recipes }) => {
+    let copy = recipes;
+
+    if (cocktailSearch) {
+      cocktailSearch = cocktailSearch.toLowerCase();
+      copy = filter(copy, i => includes(i.name.toLowerCase(), cocktailSearch))
+    }
+
+    return {
+      recipes: copy
+    }
+  }),
   withHandlers({
     onSelectAllChange: ({ setBulkSelected, ingredients, selected }) => (value) => {
       const copy = {...selected};
@@ -140,6 +163,7 @@ const enhance = compose(
       });
       setBulkSelected(copy);
     },
+    setCocktailSearch: ({ setCocktailSearch }) => e => setCocktailSearch(e.target.value),
     onAddIngredient: ({ setSelected }) => (ingredient) => {
       setSelected(ingredient, true);
     },
