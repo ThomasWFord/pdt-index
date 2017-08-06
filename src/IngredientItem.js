@@ -8,7 +8,7 @@ export const IngredientItem = ({ setSelected, numAdditional, item, checked, ...p
   return (
     <FormGroup check>
       <Label check>
-        <Input type="checkbox" onChange={setSelected} checked={checked} /> {item.name} {!!numAdditional && <Badge color="success">+{numAdditional}</Badge>}
+        <Input type="checkbox" onChange={setSelected} checked={checked} /> <span>{item.name} {!!numAdditional && <Badge color="success">+{numAdditional}</Badge>}</span>
       </Label>
     </FormGroup>
   )

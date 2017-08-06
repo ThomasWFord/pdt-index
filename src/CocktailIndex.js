@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Col, Row, InputGroup, FormGroup, Input, InputGroupAddon } from 'reactstrap'
+import { Table, Col, Row, InputGroup, FormGroup, Input, InputGroupAddon, InputGroupButton, Button } from 'reactstrap'
 import { compose, withStateHandlers, withPropsOnChange, withHandlers } from 'recompose';
 import { chain, each, filter, includes, keys } from 'lodash';
 import CocktailRow from './CocktailRow';
@@ -9,7 +9,7 @@ import IngredientsList from './IngredientsList';
 const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterIngredients,
                          onSelectAllChange, setFilterIngredients, buyList, setSelected, search, setSearch, selected,
                          onAddIngredient, onRemoveIngredient, setCocktailSearch, cocktailSearch, buyListKeyed,
-                         ...props }) => {
+                         clearCocktailSeatch, ...props }) => {
   return (
     <Row>
       <Col xs={false} sm="4" md="3">
@@ -24,9 +24,15 @@ const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterI
               <FormGroup>
                 <InputGroup>
                   <Input type="text" size="sm" placeholder="Search..." onChange={setCocktailSearch} value={cocktailSearch} />
+                  {!cocktailSearch ? (
+                    <InputGroupAddon>
+                      <span className="fa fa-search" />
+                    </InputGroupAddon>
+                    ) : (
                   <InputGroupAddon>
-                    <span className="fa fa-search" />
+                    <span className="fa fa-times" onClick={clearCocktailSeatch} />
                   </InputGroupAddon>
+                    )}
                 </InputGroup>
               </FormGroup>
               <Table size="sm" striped>
@@ -84,6 +90,7 @@ const enhance = compose(
       dirty: true,
     }),
     setSearch: () => (search) => ({ search }),
+    clearCocktailSeatch: () => () => ({ cocktailSearch: '' }),
     setCocktailSearch: () => (cocktailSearch) => ({ cocktailSearch }),
     setFilterIngredients: () => (filterIngredients) => ({ filterIngredients }),
   }),
