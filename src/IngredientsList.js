@@ -7,7 +7,7 @@ const Input = pure(ReactstrapInput);
 const Button = pure(RButton);
 
 export const IngredientsList = ({ setSearch, search, filterIngredients, showAllIngredients,
-                                  onSelectAllChange, ingredients, setSelected, selected,
+                                  ingredients, setSelected, selected,
                                   showSelectedIngredients, showUnselectedIngredients,
                                   checkboxPreventDefault, buyListKeyed, ...props }) => {
   return (
@@ -30,11 +30,6 @@ export const IngredientsList = ({ setSearch, search, filterIngredients, showAllI
           </Button>
         </ButtonGroup>
       </FormGroup>
-      <FormGroup check>
-        <Label check>
-          <Input type="checkbox" onChange={onSelectAllChange} />
-        </Label>
-      </FormGroup>
       {ingredients.map((i, idx) => (
         <IngredientItem numAdditional={buyListKeyed[i.name]} item={i} key={i.name} setSelected={setSelected} checked={!!selected[i.name]} />
       ))}
@@ -47,7 +42,6 @@ const enhance = withHandlers({
   showAllIngredients: ({ setFilterIngredients }) => () => setFilterIngredients(null),
   showSelectedIngredients: ({ setFilterIngredients }) => () => setFilterIngredients(true),
   showUnselectedIngredients: ({ setFilterIngredients }) => () => setFilterIngredients(false),
-  onSelectAllChange: ({ onSelectAllChange }) => (e) => onSelectAllChange(e.target.checked),
   checkboxPreventDefault: () => (e) => e.preventDefault(),
 });
 

@@ -14,8 +14,7 @@ const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterI
     <Row>
       <Col xs={false} sm="4" md="3">
         <Card header="Ingredients" subtitle="Select your available ingredients" toggleKey="ingredients_toggle">
-          <IngredientsList {...{ setSearch, search, filterIngredients, setFilterIngredients,
-            onSelectAllChange, ingredients, buyListKeyed, setSelected, selected }} />
+          <IngredientsList {...{ setSearch, search, filterIngredients, setFilterIngredients, ingredients, buyListKeyed, setSelected, selected }} />
         </Card>
       </Col>
       <Col xs={false} sm="8" md="9">
@@ -84,7 +83,6 @@ const enhance = compose(
       selected: { ...selected, [ingredient]: value },
       dirty: true,
     }),
-    setBulkSelected: () => (selected) => ({ selected, dirty: true }),
     setSearch: () => (search) => ({ search }),
     setCocktailSearch: () => (cocktailSearch) => ({ cocktailSearch }),
     setFilterIngredients: () => (filterIngredients) => ({ filterIngredients }),
@@ -162,13 +160,6 @@ const enhance = compose(
     }
   }),
   withHandlers({
-    onSelectAllChange: ({ setBulkSelected, ingredients, selected }) => (value) => {
-      const copy = {...selected};
-      each(ingredients, i => {
-        copy[i.name] = value;
-      });
-      setBulkSelected(copy);
-    },
     setCocktailSearch: ({ setCocktailSearch }) => e => setCocktailSearch(e.target.value),
     onAddIngredient: ({ setSelected }) => (ingredient) => {
       setSelected(ingredient, true);

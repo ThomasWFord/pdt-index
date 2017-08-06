@@ -1,6 +1,6 @@
 import React from 'react';
 import { PopoverContent, Popover, PopoverTitle, Button as ReactstrapButton } from 'reactstrap';
-import { withStateHandlers, compose, pure, withPropsOnChange, shouldUpdate } from 'recompose';
+import { withStateHandlers, compose, pure, withPropsOnChange, shouldUpdate, onlyUpdateForKeys } from 'recompose';
 import MissingIngredient from './MissingIngredient';
 import shortid from 'shortid';
 import deepDiff from 'deep-diff';
@@ -35,7 +35,7 @@ export const CocktailRow = ({ item, selected, onAddIngredient, toggle, isOpen, t
       <td>{item.numMissing}</td>
       <td>{item.missing.map((i, idx) => (
         <span key={i}>
-          <MissingIngredient appendSeperator={item.missing.length > 1 && idx < item.missing.length} onAddIngredient={onAddIngredient} ingredient={i} />
+          <MissingIngredient appendSeperator={item.missing.length > 1 && idx < item.missing.length - 1} onAddIngredient={onAddIngredient} ingredient={i} />
         </span>
       ))}</td>
     </tr>
@@ -43,7 +43,9 @@ export const CocktailRow = ({ item, selected, onAddIngredient, toggle, isOpen, t
 }
 
 const enhance = compose(
-  shouldUpdate(({ item }, { item: nextItem }) => {
+  shouldUpdate(({ item, appendSeperator }, { item: nextItem, appendSeperator: nextAppendSeperator }) => {
+    if (appendSeperator !== nextAppendSeperator) return true;
+    
     const diff = deepDiff(pick(item, ['name', 'missing']), pick(nextItem, ['name', 'missing']));
     return !!diff;
   }),
