@@ -8,13 +8,14 @@ import IngredientsList from './IngredientsList';
 
 const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterIngredients,
                          onSelectAllChange, setFilterIngredients, buyList, setSelected, search, setSearch, selected,
-                         onAddIngredient, onRemoveIngredient, setCocktailSearch, cocktailSearch, ...props }) => {
+                         onAddIngredient, onRemoveIngredient, setCocktailSearch, cocktailSearch, buyListKeyed,
+                         ...props }) => {
   return (
     <Row>
       <Col xs={false} sm="4" md="3">
         <Card header="Ingredients" subtitle="Select your available ingredients" toggleKey="ingredients_toggle">
           <IngredientsList {...{ setSearch, search, filterIngredients, setFilterIngredients,
-            onSelectAllChange, ingredients, setSelected, selected }} />
+            onSelectAllChange, ingredients, buyListKeyed, setSelected, selected }} />
         </Card>
       </Col>
       <Col xs={false} sm="8" md="9">
@@ -94,7 +95,7 @@ const enhance = compose(
       .sortBy('ingredient')
       .groupBy('name')
       .map((b, name) => {
-        const missing = {};
+        let missing = {};
 
         each(b, ({ ingredient }) => {
           if (!selected[ingredient]) {
@@ -102,11 +103,13 @@ const enhance = compose(
           }
         });
 
+        missing = keys(missing);
+
         return {
           name: name,
           page: b[0].page,
           numMissing: missing.length,
-          missing: keys(missing),
+          missing,
           raw: b,
         };
       })
@@ -119,9 +122,12 @@ const enhance = compose(
       .map((i, key) => ({ ingredient: key, num: i.length, cocktails: chain(i).map('name').sortBy().value() }))
       .orderBy(['num', 'ingredient'], ['desc', 'asc']).value();
 
+    const buyListKeyed = chain(buyList).map(i => ([i.ingredient, i.num])).fromPairs().value();
+
     const result = {
       recipes: list,
       buyList,
+      buyListKeyed,
       have: filter(list, i => i.numMissing === 0).length,
       topFiveYield: chain(buyList).take(5).sumBy(i => i.cocktails.length)
     };

@@ -9,7 +9,7 @@ const Button = pure(RButton);
 export const IngredientsList = ({ setSearch, search, filterIngredients, showAllIngredients,
                                   onSelectAllChange, ingredients, setSelected, selected,
                                   showSelectedIngredients, showUnselectedIngredients,
-                                  checkboxPreventDefault, ...props }) => {
+                                  checkboxPreventDefault, buyListKeyed, ...props }) => {
   return (
     <div>
       <FormGroup>
@@ -36,7 +36,7 @@ export const IngredientsList = ({ setSearch, search, filterIngredients, showAllI
         </Label>
       </FormGroup>
       {ingredients.map((i, idx) => (
-        <IngredientItem item={i} key={i.name} setSelected={setSelected} checked={!!selected[i.name]} />
+        <IngredientItem numAdditional={buyListKeyed[i.name]} item={i} key={i.name} setSelected={setSelected} checked={!!selected[i.name]} />
       ))}
     </div>
   )

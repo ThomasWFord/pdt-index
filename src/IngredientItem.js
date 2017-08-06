@@ -1,14 +1,14 @@
-import { FormGroup, Label, Input as ReactstrapInput } from 'reactstrap';
+import { FormGroup, Label, Input as ReactstrapInput, Badge } from 'reactstrap';
 import { withHandlers, pure } from 'recompose';
 import React from 'react';
 
 const Input = pure(ReactstrapInput);
 
-export const IngredientItem = ({ setSelected, item, checked, ...props }) => {
+export const IngredientItem = ({ setSelected, numAdditional, item, checked, ...props }) => {
   return (
     <FormGroup check>
       <Label check>
-        <Input type="checkbox" onChange={setSelected} checked={checked} /> {item.name}
+        <Input type="checkbox" onChange={setSelected} checked={checked} /> {item.name} {!!numAdditional && <Badge color="success">+{numAdditional}</Badge>}
       </Label>
     </FormGroup>
   )
