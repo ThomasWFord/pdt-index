@@ -6,13 +6,14 @@ import CocktailRow from './CocktailRow';
 import Card from './Card';
 import IngredientsList from './IngredientsList';
 
-const CocktailIndex = ({ ingredients, name, dirty, topFiveYield, onSaveChanges, recipes, have, filterIngredients, onSelectAllChange, setFilterIngredients, buyList, setSelected, search, setSearch, selected, ...props }) => {
+const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterIngredients,
+                         onSelectAllChange, setFilterIngredients, buyList, setSelected, search, setSearch, selected, onAddIngredient, onRemoveIngredient, ...props }) => {
   return (
     <Row>
       <Col xs={false} sm="4" md="3">
         <Card header="Ingredients" toggleKey="ingredients_toggle">
-          <IngredientsList {...{ setSearch, search, filterIngredients, setFilterIngredients, onSaveChanges,
-            dirty, onSelectAllChange, ingredients, setSelected, selected }} />
+          <IngredientsList {...{ setSearch, search, filterIngredients, setFilterIngredients,
+            onSelectAllChange, ingredients, setSelected, selected }} />
         </Card>
       </Col>
       <Col xs={false} sm="8" md="9">
@@ -28,7 +29,7 @@ const CocktailIndex = ({ ingredients, name, dirty, topFiveYield, onSaveChanges, 
                 </thead>
                 <tbody>
                 {recipes.map(i => (
-                  <CocktailRow key={i.name} item={i} />
+                  <CocktailRow onAddIngredient={onAddIngredient} onRemoveIngredient={onRemoveIngredient} key={i.name} item={i} />
                 ))}
                 </tbody>
 
@@ -75,13 +76,9 @@ const enhance = compose(
     setBulkSelected: () => (selected) => ({ selected, dirty: true }),
     setSearch: () => (search) => ({ search }),
     setFilterIngredients: () => (filterIngredients) => ({ filterIngredients }),
-    onSaveChanges: ({ selected }, { saveKey }) => () => {
-      localStorage.setItem(saveKey, JSON.stringify(selected));
-      return { dirty: false };
-    }
   }),
-  withPropsOnChange(['selected'], ({ selected, recipes }) => {
-    let nameIndex = 0;
+  withPropsOnChange(['selected'], ({ selected, recipes, saveKey }) => {
+    setTimeout(() => localStorage.setItem(saveKey, JSON.stringify(selected)), 1);
     const list = chain(recipes)
       .sortBy('ingredient')
       .groupBy('name')
@@ -96,7 +93,6 @@ const enhance = compose(
 
         return {
           name: name,
-          index: nameIndex++,
           page: b[0].page,
           numMissing: missing.length,
           missing,
@@ -112,12 +108,14 @@ const enhance = compose(
       .map((i, key) => ({ ingredient: key, num: i.length, cocktails: chain(i).map('name').sortBy().value() }))
       .orderBy(['num', 'ingredient'], ['desc', 'asc']).value();
 
-    return {
+    const result = {
       recipes: list,
       buyList,
       have: filter(list, i => i.numMissing === 0).length,
       topFiveYield: chain(buyList).take(5).sumBy(i => i.cocktails.length)
-    }
+    };
+
+    return result;
   }),
   withPropsOnChange(['search', 'filterIngredients'], ({ search, ingredients, filterIngredients, selected }) => {
     let copy = ingredients;
@@ -141,7 +139,10 @@ const enhance = compose(
         copy[i.name] = value;
       });
       setBulkSelected(copy);
-    }
+    },
+    onAddIngredient: ({ setSelected }) => (ingredient) => {
+      setSelected(ingredient, true);
+    },
   })
 )
 

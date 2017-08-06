@@ -6,8 +6,8 @@ import IngredientItem from './IngredientItem';
 const Input = pure(ReactstrapInput);
 const Button = pure(RButton);
 
-export const IngredientsList = ({ setSearch, search, filterIngredients, showAllIngredients, onSaveChanges,
-                                  dirty, onSelectAllChange, ingredients, setSelected, selected,
+export const IngredientsList = ({ setSearch, search, filterIngredients, showAllIngredients,
+                                  onSelectAllChange, ingredients, setSelected, selected,
                                   showSelectedIngredients, showUnselectedIngredients,
                                   checkboxPreventDefault, ...props }) => {
   return (
@@ -30,11 +30,6 @@ export const IngredientsList = ({ setSearch, search, filterIngredients, showAllI
           </Button>
         </ButtonGroup>
       </FormGroup>
-      {dirty && (
-        <FormGroup>
-         <Button size="sm" onClick={onSaveChanges} className="btn-block"><i className="fa fa-save" /> Save changes</Button>
-        </FormGroup>
-      )}
       <FormGroup check>
         <Label check>
           <Input type="checkbox" onChange={onSelectAllChange} />
