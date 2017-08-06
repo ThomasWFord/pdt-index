@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormGroup, Input as ReactstrapInput, InputGroup, InputGroupAddon, ButtonGroup, Button as RButton } from 'reactstrap';
+import { FormGroup, Input as ReactstrapInput, InputGroup, InputGroupAddon, ButtonGroup, Button as RButton, Badge } from 'reactstrap';
 import { withHandlers, pure } from 'recompose';
 import IngredientItem from './IngredientItem';
 
@@ -9,7 +9,7 @@ const Button = pure(RButton);
 export const IngredientsList = ({ setSearch, search, filterIngredients, showAllIngredients,
                                   ingredients, setSelected, selected,
                                   showSelectedIngredients, showUnselectedIngredients,
-                                  checkboxPreventDefault, buyListKeyed, ...props }) => {
+                                  checkboxPreventDefault, buyListKeyed, showPlusIngredients, ...props }) => {
   return (
     <div>
       <FormGroup>
@@ -28,6 +28,9 @@ export const IngredientsList = ({ setSearch, search, filterIngredients, showAllI
           <Button active={filterIngredients === false} onClick={showUnselectedIngredients}>
             <input type="checkbox" readOnly onClick={checkboxPreventDefault} />
           </Button>
+          <Button active={filterIngredients === '+'} onClick={showPlusIngredients}>
+            <small><Badge color="success">1+</Badge></small>
+          </Button>
         </ButtonGroup>
       </FormGroup>
       {ingredients.map((i, idx) => (
@@ -40,6 +43,7 @@ export const IngredientsList = ({ setSearch, search, filterIngredients, showAllI
 const enhance = withHandlers({
   setSearch: ({ setSearch }) => (e) => setSearch(e.target.value),
   showAllIngredients: ({ setFilterIngredients }) => () => setFilterIngredients(null),
+  showPlusIngredients: ({ setFilterIngredients }) => () => setFilterIngredients('+'),
   showSelectedIngredients: ({ setFilterIngredients }) => () => setFilterIngredients(true),
   showUnselectedIngredients: ({ setFilterIngredients }) => () => setFilterIngredients(false),
   checkboxPreventDefault: () => (e) => e.preventDefault(),

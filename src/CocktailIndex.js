@@ -139,7 +139,7 @@ const enhance = compose(
 
     return result;
   }),
-  withPropsOnChange(['search', 'filterIngredients'], ({ search, ingredients, filterIngredients, selected }) => {
+  withPropsOnChange(['search', 'filterIngredients'], ({ search, ingredients, filterIngredients, selected, buyListKeyed }) => {
     let copy = ingredients;
 
     if (search) {
@@ -147,7 +147,11 @@ const enhance = compose(
       copy = filter(copy, i => includes(i.name.toLowerCase(), search));
     }
     if (filterIngredients !== null) {
-      copy = filter(copy, i => (filterIngredients ? selected[i.name] : !selected[i.name]));
+      if (filterIngredients === '+') {
+        copy = filter(copy, i => !!buyListKeyed[i.name]);
+      } else {
+        copy = filter(copy, i => (filterIngredients ? selected[i.name] : !selected[i.name]));
+      }
     }
 
     return {
