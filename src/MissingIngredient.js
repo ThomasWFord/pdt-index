@@ -6,7 +6,7 @@ import { noop } from 'lodash';
 
 const popoverButtonStyle = {whiteSpace: 'normal', textAlign: 'left', paddingLeft: 0, paddingRight: 0};
 
-export const MissingIngredient = ({ ingredient, onAddIngredient, isOpen, toggle, target, linkStyle, ...props }) => {
+export const MissingIngredient = ({ ingredient, appendSeperator, onAddIngredient, isOpen, toggle, target, linkStyle, ...props }) => {
   return (
     <span>
       {isOpen && <Popover isOpen={isOpen} toggle={toggle} target={target}>
@@ -15,7 +15,7 @@ export const MissingIngredient = ({ ingredient, onAddIngredient, isOpen, toggle,
           <Button onClick={onAddIngredient} size="sm" color="success" block><span className="fa fa-plus" /> Add to Ingredients</Button>
         </PopoverContent>
       </Popover>}
-      <Button size="sm" color="link" style={linkStyle} onClick={toggle} id={target}>{ingredient}</Button>
+      <Button size="sm" color="link" style={linkStyle} onClick={toggle} id={target}>{ingredient}{appendSeperator && '; '}</Button>
     </span>
   )
 }

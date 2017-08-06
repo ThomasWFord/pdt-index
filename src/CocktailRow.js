@@ -10,7 +10,7 @@ const popoverButtonStyle = {whiteSpace: 'normal', textAlign: 'left'};
 
 const Button = pure(ReactstrapButton);
 
-export const CocktailRow = ({ item, onAddIngredient, toggle, isOpen, target, ...props }) => {
+export const CocktailRow = ({ item, selected, onAddIngredient, toggle, isOpen, target, ...props }) => {
   return (
     <tr>
       <td>
@@ -21,7 +21,7 @@ export const CocktailRow = ({ item, onAddIngredient, toggle, isOpen, target, ...
               <ul className="list-unstyled">
               {item.raw.map(i => (
                 <li key={i.ingredient}>
-                  {i.ingredient}<span className="text-info">{i.notes ? ` ${i.notes}` : ''}
+                  <span className={!selected[i.ingredient] ? 'text-danger' : ''}>{i.ingredient}</span><span className="text-info">{i.notes ? ` ${i.notes}` : ''}
                   {!!i.category && ` (${i.category})`}</span>
                 </li>
               ))}
@@ -35,7 +35,7 @@ export const CocktailRow = ({ item, onAddIngredient, toggle, isOpen, target, ...
       <td>{item.numMissing}</td>
       <td>{item.missing.map((i, idx) => (
         <span key={i}>
-          {!!idx && '; '}<MissingIngredient onAddIngredient={onAddIngredient} ingredient={i} />
+          <MissingIngredient appendSeperator={item.missing.length > 1 && idx < item.missing.length} onAddIngredient={onAddIngredient} ingredient={i} />
         </span>
       ))}</td>
     </tr>

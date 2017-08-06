@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Col, Row, InputGroup, FormGroup, Input, InputGroupAddon } from 'reactstrap'
 import { compose, withStateHandlers, withPropsOnChange, withHandlers } from 'recompose';
-import { chain, each, filter, includes } from 'lodash';
+import { chain, each, filter, includes, keys } from 'lodash';
 import CocktailRow from './CocktailRow';
 import Card from './Card';
 import IngredientsList from './IngredientsList';
@@ -38,7 +38,7 @@ const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterI
                 </thead>
                 <tbody>
                 {recipes.map(i => (
-                  <CocktailRow onAddIngredient={onAddIngredient} onRemoveIngredient={onRemoveIngredient} key={i.name} item={i} />
+                  <CocktailRow selected={selected} onAddIngredient={onAddIngredient} onRemoveIngredient={onRemoveIngredient} key={i.name} item={i} />
                 ))}
                 </tbody>
 
@@ -94,11 +94,11 @@ const enhance = compose(
       .sortBy('ingredient')
       .groupBy('name')
       .map((b, name) => {
-        const missing = [];
+        const missing = {};
 
         each(b, ({ ingredient }) => {
           if (!selected[ingredient]) {
-            missing.push(ingredient);
+            missing[ingredient] = true;
           }
         });
 
@@ -106,7 +106,7 @@ const enhance = compose(
           name: name,
           page: b[0].page,
           numMissing: missing.length,
-          missing,
+          missing: keys(missing),
           raw: b,
         };
       })
@@ -143,7 +143,7 @@ const enhance = compose(
       ingredients: copy,
     }
   }),
-  withPropsOnChange(['cocktailSearch'], ({ cocktailSearch, recipes }) => {
+  withPropsOnChange(['cocktailSearch', 'recipes'], ({ cocktailSearch, recipes }) => {
     let copy = recipes;
 
     if (cocktailSearch) {
