@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormGroup, Input as ReactstrapInput, InputGroup, InputGroupAddon, ButtonGroup, Button as RButton, Label } from 'reactstrap';
+import { FormGroup, Input as ReactstrapInput, InputGroup, InputGroupAddon, ButtonGroup, Button as RButton } from 'reactstrap';
 import { withHandlers, pure } from 'recompose';
 import IngredientItem from './IngredientItem';
 
