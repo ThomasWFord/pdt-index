@@ -12,7 +12,7 @@ const Button = pure(ReactstrapButton);
 
 export const CocktailRow = ({ item, selected, onAddIngredient, toggle, isOpen, target, ...props }) => {
   return (
-    <tr>
+    <tr style={{display: item.visible ? 'table-row': 'none'}}>
       <td>
         <div>
           {isOpen && <Popover placement="right" isOpen={isOpen} toggle={toggle} target={target}>
@@ -32,6 +32,7 @@ export const CocktailRow = ({ item, selected, onAddIngredient, toggle, isOpen, t
 
         </div>
       </td>
+      <td>{item.badge}</td>
       <td>{item.numMissing}</td>
       <td>{item.missing.map((i, idx) => (
         <span key={i}>
@@ -46,7 +47,7 @@ const enhance = compose(
   shouldUpdate(({ item, appendSeperator }, { item: nextItem, appendSeperator: nextAppendSeperator }) => {
     if (appendSeperator !== nextAppendSeperator) return true;
 
-    const diff = deepDiff(pick(item, ['name', 'missing']), pick(nextItem, ['name', 'missing']));
+    const diff = deepDiff(pick(item, ['name', 'missing', 'visible']), pick(nextItem, ['name', 'missing', 'visible']));
     return !!diff;
   }),
   withPropsOnChange([''], () => ({ target: shortid() })),

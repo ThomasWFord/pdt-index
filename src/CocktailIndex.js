@@ -1,18 +1,26 @@
 import React from 'react';
-import { Table, Col, Row, InputGroup, FormGroup, Input, InputGroupAddon, InputGroupButton, Button } from 'reactstrap'
+import { Table, Col, Row, InputGroup, FormGroup, InputGroupAddon } from 'reactstrap'
 import { compose, withStateHandlers, withPropsOnChange, withHandlers } from 'recompose';
-import { chain, each, filter, includes, keys } from 'lodash';
+import { chain, each, filter, includes, keys, map } from 'lodash';
 import CocktailRow from './CocktailRow';
 import Card from './Card';
 import IngredientsList from './IngredientsList';
+import IndexItem from './IndexItem';
+import DebounceInput from 'react-debounce-input';
+import _ from 'lodash';
 
 const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterIngredients,
-                         onSelectAllChange, setFilterIngredients, buyList, setSelected, search, setSearch, selected,
+                         setFilterIngredients, buyList, setSelected, search, setSearch, selected,
                          onAddIngredient, onRemoveIngredient, setCocktailSearch, cocktailSearch, buyListKeyed,
-                         clearCocktailSeatch, ...props }) => {
+                         clearCocktailSeatch, setSelectedIndex, selectedIndexes, indexes, ...props }) => {
   return (
     <Row>
       <Col xs={false} sm="4" md="3">
+        <Card header="Indexes" className="mb-2" subtitle="Select the book indexes you want to see" toggleKey="indexes_toggle">
+          {indexes.map(i => (
+            <IndexItem setSelectedIndex={setSelectedIndex} key={i.name} item={i} selected={!!selectedIndexes[i.name]} />
+          ))}
+        </Card>
         <Card header="Ingredients" subtitle="Select your available ingredients" toggleKey="ingredients_toggle">
           <IngredientsList {...{ setSearch, search, filterIngredients, setFilterIngredients, ingredients, buyListKeyed, setSelected, selected }} />
         </Card>
@@ -20,10 +28,10 @@ const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterI
       <Col xs={false} sm="8" md="9">
         <Row>
           <Col xs={false} xl={true} className="mt-2 mt-sm-0">
-            <Card toggleKey="cocktails_toggle" header={`${name} Cocktails`} subtitle={`You can make ${have} out of ${recipes.length} cocktails`}>
+            <Card toggleKey="cocktails_toggle" header={name ? `${name} Cocktails` : 'Cocktails'} subtitle={`You can make ${have} out of ${recipes.length} cocktails`}>
               <FormGroup>
                 <InputGroup>
-                  <Input type="text" size="sm" placeholder="Search..." onChange={setCocktailSearch} value={cocktailSearch} />
+                  <DebounceInput debounceTimeout={1000} placeholder="Search..." onChange={setCocktailSearch} value={cocktailSearch} className="form-control" />
                   {!cocktailSearch ? (
                     <InputGroupAddon>
                       <span className="fa fa-search" />
@@ -39,12 +47,13 @@ const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterI
                 <thead>
                 <tr>
                   <th>Name</th>
+                  <th></th>
                   <th colSpan="2">Missing</th>
                 </tr>
                 </thead>
                 <tbody>
                 {recipes.map(i => (
-                  <CocktailRow selected={selected} onAddIngredient={onAddIngredient} onRemoveIngredient={onRemoveIngredient} key={i.name} item={i} />
+                  <CocktailRow selected={selected} onAddIngredient={onAddIngredient} onRemoveIngredient={onRemoveIngredient} key={i.key} item={i} />
                 ))}
                 </tbody>
 
@@ -78,10 +87,13 @@ const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterI
   );
 }
 
+const loadOrDefault = (key, defaultValue) => JSON.parse(localStorage.getItem(key) || JSON.stringify(defaultValue));
+
 const enhance = compose(
-  withStateHandlers(({ saveKey }) => ({
-    selected: JSON.parse(localStorage.getItem(saveKey) || '{}'),
+  withStateHandlers(({ saveKey, indexes }) => ({
+    selected: loadOrDefault(saveKey, {}),
     search: '',
+    selectedIndexes: loadOrDefault('selectedIndexes', _.fromPairs(map(indexes, i => [i.name, true]))),
     cocktailSearch: '',
     filterIngredients: null
   }), {
@@ -89,18 +101,32 @@ const enhance = compose(
       selected: { ...selected, [ingredient]: value },
       dirty: true,
     }),
+    setSelectedIndex: ({ selectedIndexes }) => (index, value) => ({
+      selectedIndexes: { ...selectedIndexes, [index]: value }
+    }),
     setSearch: () => (search) => ({ search }),
     clearCocktailSeatch: () => () => ({ cocktailSearch: '' }),
     setCocktailSearch: () => (cocktailSearch) => ({ cocktailSearch }),
     setFilterIngredients: () => (filterIngredients) => ({ filterIngredients }),
   }),
-  withPropsOnChange(['selected'], ({ selected, recipes, saveKey }) => {
-    setTimeout(() => localStorage.setItem(saveKey, JSON.stringify(selected)), 1);
+  withPropsOnChange(['selectedIndexes'], ({ selectedIndexes, recipes: previousRecipes }) => {
+    localStorage.setItem('selectedIndexes', JSON.stringify(selectedIndexes));
+
+    const recipes = filter(previousRecipes, i => selectedIndexes[i.index])
+    return {
+      recipes,
+      ingredients: chain(recipes).map('ingredient').uniq().sortBy().map(name => ({ name })).value()
+    };
+  }),
+  withPropsOnChange(['selected', 'recipes'], ({ selected, recipes, saveKey }) => {
+    localStorage.setItem(saveKey, JSON.stringify(selected));
+
     const list = chain(recipes)
       .sortBy('ingredient')
-      .groupBy('name')
-      .map((b, name) => {
+      .groupBy('key')
+      .map((b, key) => {
         let missing = {};
+        const first = b[0];
 
         each(b, ({ ingredient }) => {
           if (!selected[ingredient]) {
@@ -111,8 +137,10 @@ const enhance = compose(
         missing = keys(missing);
 
         return {
-          name: name,
-          page: b[0].page,
+          key,
+          name: first.name,
+          badge: first.badge,
+          page: first.page,
           numMissing: missing.length,
           missing,
           raw: b,
@@ -139,7 +167,7 @@ const enhance = compose(
 
     return result;
   }),
-  withPropsOnChange(['search', 'filterIngredients'], ({ search, ingredients, filterIngredients, selected, buyListKeyed }) => {
+  withPropsOnChange(['search', 'filterIngredients', 'ingredients'], ({ search, ingredients, filterIngredients, selected, buyListKeyed }) => {
     let copy = ingredients;
 
     if (search) {
@@ -159,12 +187,12 @@ const enhance = compose(
     }
   }),
   withPropsOnChange(['cocktailSearch', 'recipes'], ({ cocktailSearch, recipes }) => {
-    let copy = recipes;
+    const loweredCocktailSearch = cocktailSearch ? cocktailSearch.toLowerCase() : '';
 
-    if (cocktailSearch) {
-      cocktailSearch = cocktailSearch.toLowerCase();
-      copy = filter(copy, i => includes(i.name.toLowerCase(), cocktailSearch))
-    }
+    const copy = map(recipes, i => {
+      const visible = !loweredCocktailSearch || includes(i.name.toLowerCase(), loweredCocktailSearch);
+      return {...i, visible };
+    });
 
     return {
       recipes: copy
