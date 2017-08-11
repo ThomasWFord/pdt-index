@@ -15,7 +15,7 @@ const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterI
                          clearCocktailSeatch, setSelectedIndex, selectedIndexes, indexes, ...props }) => {
   return (
     <Row>
-      <Col xs={false} md="5" lg="4" xl="3">
+      <Col xs={false} lg="4" xl="4">
         <Card header="Indexes" className="mb-2" subtitle="Select the book indexes you want to see" toggleKey="indexes_toggle">
           {indexes.map(i => (
             <IndexItem setSelectedIndex={setSelectedIndex} key={i.name} item={i} selected={!!selectedIndexes[i.name]} />
@@ -27,10 +27,8 @@ const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterI
       </Col>
 
 
-      <Col xs={false} md="7" lg="8" xl="9">
-        <Row>
-          <Col xs={false} xl={true} className="mt-2 mt-md-0">
-            <Card toggleKey="cocktails_toggle" header={name ? `${name} Cocktails` : 'Cocktails'} subtitle={`You can make ${have} out of ${recipes.length} cocktails`}>
+      <Col xs={false} lg="8" xl="8">
+            <Card className="mt-2 mt-lg-0" toggleKey="cocktails_toggle" header={name ? `${name} Cocktails` : 'Cocktails'} subtitle={`You can make ${have} out of ${recipes.length} cocktails`}>
               <FormGroup>
                 <InputGroup>
                   <DebounceInput debounceTimeout={1000} placeholder="Search..." onChange={setCocktailSearch} value={cocktailSearch} className="form-control" />
@@ -50,7 +48,7 @@ const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterI
                 <tr>
                   <th>Name</th>
                   <th></th>
-                  <th className="hidden-sm-down">Page</th>
+                  <th className="hidden-md-down">Page</th>
                   <th colSpan="2">Missing</th>
                 </tr>
                 </thead>
@@ -62,9 +60,7 @@ const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterI
 
               </Table>
             </Card>
-          </Col>
-          <Col xs={false} xl={true} className="mt-2 mt-xl-0">
-            <Card toggleKey="buylist_toggle" header="Buy List" subtitle={`Purchase the top 5 for an additional ${topFiveYield} cocktails`}>
+            <Card className="mt-2" toggleKey="buylist_toggle" header="Buy List" subtitle={`Purchase the top 5 for an additional ${topFiveYield} cocktails`}>
               <Table size="sm" striped>
                 <thead>
                 <tr>
@@ -83,8 +79,6 @@ const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterI
                 </tbody>
               </Table>
             </Card>
-          </Col>
-        </Row>
       </Col>
     </Row>
   );

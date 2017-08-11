@@ -33,7 +33,7 @@ export const CocktailRow = ({ item, selected, onAddIngredient, toggle, isOpen, t
         </div>
       </td>
       <td>{item.badge}</td>
-      <td className="hidden-sm-down">{item.page}</td>
+      <td className="hidden-md-down">{item.page}</td>
       <td>{item.numMissing}</td>
       <td>{item.missing.map((i, idx) => (
         <span key={i}>
