@@ -48,6 +48,7 @@ const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterI
                 <tr>
                   <th>Name</th>
                   <th></th>
+                  <th className="hidden-sm-down">Page</th>
                   <th colSpan="2">Missing</th>
                 </tr>
                 </thead>
