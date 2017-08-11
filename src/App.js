@@ -29,12 +29,12 @@ const indexes = chain([{
   fullName: `Smuggler's Cove`,
   recipes: smugglersCoveRecipes,
 }, {
-  name: 'VS&FC',
+  name: 'VS',
   fullName: 'Vintage Spirits & Forgotten Cocktails',
   recipes: vsAndFcRecipes,
 }]).map((i, idx) => ({
   ...i,
-  badge: <Badge color={colours[idx]} style={{width: 40, fontSize: '75%'}}>{i.name}</Badge>
+  badge: <Badge color={colours[idx]} style={{width: 25}}><small>{i.name}</small></Badge>
 })).value();
 
 const recipes = chain(indexes)
