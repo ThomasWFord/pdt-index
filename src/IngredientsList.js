@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormGroup, Input as ReactstrapInput, InputGroup, InputGroupAddon, ButtonGroup, Button as RButton, Badge } from 'reactstrap';
+import { FormGroup, Input as ReactstrapInput, ListGroup, InputGroup, InputGroupAddon, ButtonGroup, Button as RButton, Badge } from 'reactstrap';
 import { withHandlers, pure } from 'recompose';
 import IngredientItem from './IngredientItem';
 
@@ -33,9 +33,11 @@ export const IngredientsList = ({ setSearch, search, filterIngredients, showAllI
           </Button>
         </ButtonGroup>
       </FormGroup>
-      {ingredients.map((i, idx) => (
-        <IngredientItem numAdditional={buyListKeyed[i.name]} item={i} key={i.name} setSelected={setSelected} checked={!!selected[i.name]} />
-      ))}
+      <ListGroup>
+        {ingredients.map((i, idx) => (
+          <IngredientItem numAdditional={buyListKeyed[i.name]} item={i} key={i.name} setSelected={setSelected} checked={!!selected[i.name]} />
+        ))}
+      </ListGroup>
     </div>
   )
 }

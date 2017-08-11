@@ -1,21 +1,17 @@
-import { FormGroup, Label, Input as ReactstrapInput, Badge } from 'reactstrap';
-import { withHandlers, pure } from 'recompose';
+import { Badge, ListGroupItem } from 'reactstrap';
+import { withHandlers } from 'recompose';
 import React from 'react';
 
-const Input = pure(ReactstrapInput);
-
-export const IngredientItem = ({ setSelected, numAdditional, item, checked, ...props }) => {
+export const IngredientItem = ({ toggleSelected, numAdditional, item, checked, ...props }) => {
   return (
-    <FormGroup check>
-      <Label check>
-        <Input type="checkbox" onChange={setSelected} checked={checked} /> <span>{item.name} {!!numAdditional && <Badge color="success">+{numAdditional}</Badge>}</span>
-      </Label>
-    </FormGroup>
+    <ListGroupItem active={checked} action onClick={toggleSelected} className="justify-content-between">
+      {item.name} {!!numAdditional && <Badge color="success">+{numAdditional}</Badge>}
+      </ListGroupItem>
   )
 };
 
 const enhance = withHandlers({
-  setSelected: ({ setSelected, item }) => (e) => setSelected(item.name, e.target.checked)
+  toggleSelected: ({ setSelected, item, checked }) => (e) => setSelected(item.name, !checked)
 });
 
 export default enhance(IngredientItem);
