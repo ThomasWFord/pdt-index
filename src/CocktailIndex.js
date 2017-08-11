@@ -15,19 +15,21 @@ const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterI
                          clearCocktailSeatch, setSelectedIndex, selectedIndexes, indexes, ...props }) => {
   return (
     <Row>
-      <Col xs={false} sm="4" md="3">
+      <Col xs={false} md="5" lg="4" xl="3">
         <Card header="Indexes" className="mb-2" subtitle="Select the book indexes you want to see" toggleKey="indexes_toggle">
           {indexes.map(i => (
             <IndexItem setSelectedIndex={setSelectedIndex} key={i.name} item={i} selected={!!selectedIndexes[i.name]} />
           ))}
         </Card>
-        <Card header="Ingredients" subtitle="Select your available ingredients" toggleKey="ingredients_toggle">
+        <Card header="Ingredients" subtitle="Select your ingredients" toggleKey="ingredients_toggle">
           <IngredientsList {...{ setSearch, search, filterIngredients, setFilterIngredients, ingredients, buyListKeyed, setSelected, selected }} />
         </Card>
       </Col>
-      <Col xs={false} sm="8" md="9">
+
+
+      <Col xs={false} md="7" lg="8" xl="9">
         <Row>
-          <Col xs={false} xl={true} className="mt-2 mt-sm-0">
+          <Col xs={false} xl={true} className="mt-2 mt-md-0">
             <Card toggleKey="cocktails_toggle" header={name ? `${name} Cocktails` : 'Cocktails'} subtitle={`You can make ${have} out of ${recipes.length} cocktails`}>
               <FormGroup>
                 <InputGroup>
