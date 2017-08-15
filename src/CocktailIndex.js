@@ -90,7 +90,7 @@ const enhance = compose(
   withStateHandlers(({ saveKey, indexes }) => ({
     selected: loadOrDefault(saveKey, {}),
     search: '',
-    selectedIndexes: loadOrDefault('selectedIndexes', _.fromPairs(map(indexes, i => [i.name, true]))),
+    selectedIndexes: loadOrDefault('selectedIndexes', {}),
     cocktailSearch: '',
     filterIngredients: null
   }), {

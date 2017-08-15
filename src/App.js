@@ -12,10 +12,12 @@ import { chain, map } from 'lodash';
 import CocktailIndex from './CocktailIndex';
 import { compose, withStateHandlers } from 'recompose';
 import ReactGA from 'react-ga';
+import { startsWith } from 'lodash';
+
 
 ReactGA.initialize('UA-103648191-1');
 
-const colours = ['primary', 'success', 'info', 'warning'];
+const colours = ['primary', 'success', 'info', 'warning', 'default', 'danger', '#109618', '#DD4477', '#DC3912'];
 
 const indexes = chain([{
   name: 'PDT',
@@ -32,9 +34,29 @@ const indexes = chain([{
   name: 'VS',
   fullName: 'Vintage Spirits & Forgotten Cocktails',
   recipes: vsAndFcRecipes,
+}, {
+  name: 'DR',
+  fullName: 'Dead Rabbit Drinks Manual',
+  recipes: require('./etc/dead_rabbits_drinks_manual.csv')
+}, {
+  name: 'LI',
+  fullName: 'Liquid Intelligence',
+  recipes: require('./etc/liquid_intelligence.csv')
+}, {
+  name: 'DB',
+  fullName: 'The Drunken Botanist',
+  recipes: require('./etc/the_drunken_botanist.csv')
+}, {
+  name: 'CC',
+  fullName: 'The Canon Cocktail Book',
+  recipes: require('./etc/canon_cocktail_book.csv')
+},{
+  name: 'SE',
+  fullName: 'Speakeasy: The Employees Only Guide',
+  recipes: require('./etc/speakeasy.csv')
 }]).map((i, idx) => ({
   ...i,
-  badge: <Badge color={colours[idx]} style={{width: 25}}><small>{i.name}</small></Badge>
+  badge: <Badge color={colours[idx]} style={{width: 25, backgroundColor: startsWith(colours[idx], '#') ? colours[idx] : null }}><small>{i.name}</small></Badge>
 })).value();
 
 const recipes = chain(indexes)
