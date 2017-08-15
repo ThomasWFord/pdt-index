@@ -90,7 +90,7 @@ const App = ({ toggle, isOpen, ...props }) => {
       </Navbar>
       <div className="container-fluid " style={containerStyle}>
         <CocktailIndex indexes={indexes} recipes={recipes} saveKey={`selected`} />
-        <p className="text-muted mt-3 text-center">Thanks to ThePaternalDrunk, el_joker1 & rebeldragonlol for the index spreadsheets</p>
+        <p className="text-muted mt-3 text-center">Thanks to ThePaternalDrunk, el_joker1, openequalsheavier & rebeldragonlol for the index spreadsheets</p>
       </div>
     </div>
   );
