@@ -4,7 +4,7 @@ import bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
 // eslint-disable-next-line
 import fontAwesomeStyles from 'font-awesome/css/font-awesome.min.css';
 import { Navbar, NavbarBrand, Badge } from 'reactstrap';
-import { chain, map, each } from 'lodash';
+import { chain, map, each, includes } from 'lodash';
 import CocktailIndex from './CocktailIndex';
 import { compose, withStateHandlers } from 'recompose';
 import ReactGA from 'react-ga';
@@ -34,9 +34,10 @@ const mapping = chain({
       const { recipes } = mapping[source];
 
       recipes.push(...map(ingredients, i => {
-        const { ingredient, name: notes } = ingredientsSource[i];
+        const { ingredient, type, name: notes } = ingredientsSource[i];
+
         return {
-          ingredient,
+          ingredient: (includes(ingredient, type) || type === 'Other') ? ingredient : `${ingredient} (${type})`,
           name,
           notes,
           page,
