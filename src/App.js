@@ -50,7 +50,7 @@ const mapping = chain({
 ReactGA.initialize('UA-103648191-1');
 
 
-const colours = ['primary', 'success', 'info', 'warning', 'default', 'danger', '#109618', '#DD4477', '#DC3912'];
+const colours = ['primary', 'secondary', 'success', 'info', 'warning', 'danger', 'light', 'dark', 'custom-1'];
 
 const indexes = chain(mapping).map((i, idx) => ({
   ...i,

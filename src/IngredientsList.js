@@ -22,13 +22,13 @@ export const IngredientsList = ({ setSearch, search, filterIngredients, showAllI
       </FormGroup>
       <FormGroup>
         <ButtonGroup>
-          <Button active={filterIngredients === null} onClick={showAllIngredients}>*</Button>{' '}
-          <Button active={filterIngredients === true} onClick={showSelectedIngredients}>
+          <Button color="light" active={filterIngredients === null} onClick={showAllIngredients}>*</Button>{' '}
+          <Button color="light" active={filterIngredients === true} onClick={showSelectedIngredients}>
             <input type="checkbox" readOnly checked /></Button>{' '}
-          <Button active={filterIngredients === false} onClick={showUnselectedIngredients}>
+          <Button color="light" active={filterIngredients === false} onClick={showUnselectedIngredients}>
             <input type="checkbox" readOnly onClick={checkboxPreventDefault} />
           </Button>
-          <Button active={filterIngredients === '+'} onClick={showPlusIngredients}>
+          <Button color="light" active={filterIngredients === '+'} onClick={showPlusIngredients}>
             <small><Badge color="success">1+</Badge></small>
           </Button>
         </ButtonGroup>

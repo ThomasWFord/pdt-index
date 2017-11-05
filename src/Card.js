@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardBlock, CardTitle, CardText, CardSubtitle, CardHeader, Collapse } from 'reactstrap';
+import { Card, CardBody, CardTitle, CardText, CardSubtitle, CardHeader, Collapse } from 'reactstrap';
 import { compose, withStateHandlers } from 'recompose';
 import classNames from 'classnames';
 
@@ -9,11 +9,11 @@ export const LocalCard = ({ title, subtitle, isOpen, toggleKey, toggle, header, 
     <Card {...props}>
       {!!header && <CardHeader tag="h6" onClick={toggle}>{header} <span className={toggleClass} /></CardHeader>}
       <Collapse isOpen={isOpen}>
-        <CardBlock>
+        <CardBody>
           {!!title && <CardTitle>{title}</CardTitle>}
           {!!subtitle && <CardSubtitle className="text-muted mb-3">{subtitle}</CardSubtitle>}
           <CardText tag="div">{children}</CardText>
-        </CardBlock>
+        </CardBody>
       </Collapse>
     </Card>
   );

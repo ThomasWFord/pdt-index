@@ -7,7 +7,6 @@ import Card from './Card';
 import IngredientsList from './IngredientsList';
 import IndexItem from './IndexItem';
 import DebounceInput from 'react-debounce-input';
-import _ from 'lodash';
 
 const CocktailIndex = ({ ingredients, name, topFiveYield, recipes, have, filterIngredients,
                          setFilterIngredients, buyList, setSelected, search, setSearch, selected,
